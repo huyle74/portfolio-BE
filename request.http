@@ -1,0 +1,64 @@
+# List all Portfolio
+GET http://localhost:3000/portfolio
+
+#### Get ID
+GET  http://localhost:3000/portfolio/1
+
+#### Create Port
+POST http://localhost:3000/portfolio/create-portfolio
+content-Type: application/json
+
+{
+  "title": "Donald J Trump",
+  "imageUrl": "https://ik.imagekit.io/tvlk/blog/2022/10/kinh-nghiem-du-lich-vinh-ha-long-1.jpg?tr=dpr-2,w-675",
+  "background": "Testinggg",
+  "strategy": "Createtive Idea",
+  "execution": "Ronaldo",
+  "creative": "Gump",
+  "people": [
+    {
+      "name": "Huyen Vo",
+      "company": "Circus",
+      "role": "Planner"
+    },
+    {
+      "name": "Roberto Concha Rodríguez",
+      "company": "GUT Mexico City",
+      "role": "Sr. Copywriter"
+    },
+    {
+      "name": "Alejandra Margain",
+      "company": "GUT Mexico City",
+      "role": "Strategy Director"
+    }
+  ]
+}
+
+#### Delete Port
+DELETE http://localhost:3000/portfolio/2
+
+#### USER
+POST http://localhost:3000/user/signup
+Content-Type: application/json
+
+{
+  "email": "onlyFan@anything.com",
+  "password": "33333"
+}
+
+#### USER FIND
+GET http://localhost:3000/user/3
+
+#### USER FIND ALL
+GET http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "email": "onlyFan@anything.com"
+}
+
+#### REMOVE USER
+DELETE http://localhost:3000/user/5
+
+### UPLOAD FILE
+POST http://localhost:3000/portfolio/
