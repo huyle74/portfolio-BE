@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Portfolio } from './portfolio.entity';
+import { createPortDto } from './dto/create-portfolio.dto';
 
 @Injectable()
 export class PortfolioService {
@@ -9,25 +10,9 @@ export class PortfolioService {
     @InjectRepository(Portfolio) private port: Repository<Portfolio>,
   ) {}
 
-  createPortfolio(
-    title: string,
-    imageUrl: string,
-    strategy: string,
-    background: string,
-    execution: string,
-    creative: string,
-    people: any[],
-  ) {
-    const portfolio = this.port.create({
-      title: title,
-      imageUrl: imageUrl,
-      strategy: strategy,
-      background: background,
-      execution: execution,
-      creative: creative,
-      people: people,
-    });
-    return this.port.save(portfolio);
+  async createPortfolio(createPortDto: createPortDto) {
+    const portfolio = this.port.create(createPortDto);
+    return await this.port.save(portfolio);
   }
 
   findOne(id: number) {
@@ -39,39 +24,22 @@ export class PortfolioService {
   }
 
   async update(id: number, attrs: Partial<Portfolio>) {
-    const port = await this.findOne(id);
-
-    if (!port) {
+    const res = await this.findOne(id);
+    if (!res) {
       throw new NotFoundException('Not found');
     }
-
-    Object.assign(id, attrs);
-    return this.port.save(port);
+    Object.assign(res, attrs);
+    return this.port.save(res);
   }
 
   async remove(id: number) {
-    const port = await this.findOne(id);
+    const res = await this.findOne(id);
 
-    if (!port) {
+    if (!res) {
       throw new NotFoundException('Not found');
     }
-    return this.port.remove(port);
-  }
-
-  async uploadFile(file: {
-    filename: string;
-    filepath: string;
-    mimetype: string;
-    size: number;
-  }) {
-    const fileRecord = this.port.create({
-      uploadFile: {
-        filename: file.filename,
-        filepath: file.filepath,
-        mimetype: file.mimetype,
-        size: file.size,
-      },
-    });
-    return this.port.save(fileRecord);
+    return this.port.remove(res);
   }
 }
+
+

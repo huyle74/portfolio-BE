@@ -1,14 +1,17 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { MulterModule } from '@nestjs/platform-express';
+import * as multer from 'multer';
 
+import { AuthModule } from 'src/auth/auth.module';
+import { AuthController } from 'src/auth/auth.controller';
+import { AuthService } from 'src/auth/auth.service';
 import { Portfolio } from './portfolio.entity';
 import { PortfolioController } from './portfolio.controller';
 import { PortfolioService } from './portfolio.service';
-import { UserController } from 'src/user/user.controller';
-import { UserModule } from 'src/user/user.module';
-import { User } from 'src/user/user.entity';
+import { LoginMiddleWare } from './middleware/login.middleware';
+import { GoogleServiceStorage } from './core/google.storage';
 
 @Module({
   imports: [
@@ -19,17 +22,20 @@ import { User } from 'src/user/user.entity';
       username: 'root',
       password: '123456',
       database: 'portfolio',
-      entities: [Portfolio, User],
+      entities: [Portfolio],
       synchronize: true,
     }),
-    UserModule,
+    AuthModule,
     TypeOrmModule.forFeature([Portfolio]),
-    MulterModule.register({dest:'./uploadfile'})
+    MulterModule.register({ storage: multer.memoryStorage() }),
   ],
 
-  controllers: [PortfolioController, UserController],
-  providers: [PortfolioService],
+  controllers: [PortfolioController],
+  providers: [PortfolioService, GoogleServiceStorage],
 })
-export class PortfolioModule {
+export class PortfolioModule implements NestModule {
   constructor(private dataSource: DataSource) {}
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoginMiddleWare).forRoutes('portfolio/login');
+  }
 }

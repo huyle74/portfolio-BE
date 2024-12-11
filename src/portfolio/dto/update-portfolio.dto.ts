@@ -5,9 +5,9 @@ export class UpdatePortDto {
   @IsString()
   title: string;
 
-  @IsOptional()
-  @IsString()
-  imageUrl: string;
+  // @IsOptional()
+  // @IsString()
+  // imageUrl: string;
 
   @IsOptional()
   @IsString()

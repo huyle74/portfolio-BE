@@ -7,37 +7,47 @@ import {
   Query,
   Delete,
   Patch,
-  Redirect,
   UploadedFile,
   UseInterceptors,
+  BadRequestException,
+  Redirect,
 } from '@nestjs/common';
+import * as multer from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { createPortDto } from './dto/create-portfolio.dto';
 import { UpdatePortDto } from './dto/update-portfolio.dto';
 import { PortfolioService } from './portfolio.service';
+import { GoogleServiceStorage } from './core/google.storage';
 
 @Controller('portfolio')
 export class PortfolioController {
-  constructor(public portfolioService: PortfolioService) {}
+  constructor(
+    public portfolioService: PortfolioService,
+    private googleStorage: GoogleServiceStorage,
+  ) {}
+
   @Get()
   listAllPortfolio(@Query('title') title: string) {
     const res = this.portfolioService.findAll(title);
-    console.log(res);
     return res;
   }
 
   @Post('/create-portfolio')
+  @UseInterceptors(FileInterceptor('file', { storage: multer.memoryStorage() }))
   @Redirect('http://localhost:3001/admin')
-  createPortfolio(@Body() body: createPortDto) {
-    return this.portfolioService.createPortfolio(
-      body.title,
-      body.imageUrl,
-      body.strategy,
-      body.background,
-      body.execution,
-      body.creative,
-      body.people,
-    );
+  async createPortfolio(
+    @Body() body: createPortDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    if (!file) {
+      throw new BadRequestException('File is required');
+    }
+    const imageUpload = await this.googleStorage.uploadFile(file);
+
+    return await this.portfolioService.createPortfolio({
+      uploadFile: imageUpload.publicUrl,
+      ...body,
+    });
   }
 
   @Get('/:id')
@@ -50,24 +60,9 @@ export class PortfolioController {
     return this.portfolioService.remove(parseInt(id));
   }
 
-  @Patch('/:id')
+  @Patch(':id')
+  @Redirect('http://localhost:3001/admin')
   updatePortfolio(@Param('id') id: string, @Body() body: UpdatePortDto) {
     return this.portfolioService.update(parseInt(id), body);
-  }
-
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    const upload = this.portfolioService.uploadFile({
-      filename: file.filename,
-      filepath: file.path,
-      mimetype: file.mimetype,
-      size: file.size,
-    }); 
-    console.log(file);
-    return {   
-      message: 'File uploaded successfully',
-      upload,
-    };
   }
 }

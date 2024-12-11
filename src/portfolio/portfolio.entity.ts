@@ -6,13 +6,6 @@ type People = {
   role: string;
 };
 
-type File = {
-  filename: string;
-  filepath: string;
-  mimetype: string;
-  size: number;
-};
-
 @Entity()
 export class Portfolio {
   @PrimaryGeneratedColumn()
@@ -22,7 +15,7 @@ export class Portfolio {
   title: string;
 
   @Column({ type: 'text' })
-  imageUrl: string;
+  uploadFile: string;
 
   @Column({ type: 'text' })
   strategy: string;
@@ -38,7 +31,4 @@ export class Portfolio {
 
   @Column({ type: 'json', nullable: true })
   people: People[];
-
-  @Column({ type: 'json', nullable: true })
-  uploadFile: File;
 }

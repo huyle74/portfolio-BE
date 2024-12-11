@@ -1,8 +1,19 @@
 # List all Portfolio
 GET http://localhost:3000/portfolio
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imh1eWVudm8iLCJpYXQiOjE3MzM3NDA0NzAsImV4cCI6MTczMzc0MDk3MH0.EYfKs8FJGbPKS5Nc15TSWBP5LMvzONMRykRCvJGGqr8
 
-#### Get ID
-GET  http://localhost:3000/portfolio/1
+#### Auth
+GET  http://localhost:3000/auth/admin
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imh1eWVudm8iLCJpYXQiOjE3MzM3NDA0NzAsImV4cCI6MTczMzc0MDk3MH0.EYfKs8FJGbPKS5Nc15TSWBP5LMvzONMRykRCvJGGqr8
+
+#### Authentication
+POST http://localhost:3000/auth/login
+Content-Type: application/json 
+
+{
+  "username": "huyenvo",
+  "password": "huyenvo"
+}
 
 #### Create Port
 POST http://localhost:3000/portfolio/create-portfolio
@@ -10,7 +21,6 @@ content-Type: application/json
 
 {
   "title": "Donald J Trump",
-  "imageUrl": "https://ik.imagekit.io/tvlk/blog/2022/10/kinh-nghiem-du-lich-vinh-ha-long-1.jpg?tr=dpr-2,w-675",
   "background": "Testinggg",
   "strategy": "Createtive Idea",
   "execution": "Ronaldo",
@@ -46,19 +56,35 @@ Content-Type: application/json
   "password": "33333"
 }
 
-#### USER FIND
-GET http://localhost:3000/user/3
-
-#### USER FIND ALL
-GET http://localhost:3000/user
-Content-Type: application/json
+#### UPDATE
+PATCH http://localhost:3000/portfolio/106
+content-Type: application/json
 
 {
-  "email": "onlyFan@anything.com"
+  "title": "Donald J Trump",
+  "background": "Testinggg",
+  "strategy": "Createtive Idea",
+  "execution": "Ronaldo",
+  "creative": "Gump",
+  "people": [
+    {
+      "name": "Huyen Vo",
+      "company": "Circus",
+      "role": "Planner"
+    },
+    {
+      "name": "Roberto Concha Rodríguez",
+      "company": "GUT Mexico City",
+      "role": "Sr. Copywriter"
+    },
+    {
+      "name": "Alejandra Margain",
+      "company": "GUT Mexico City",
+      "role": "Strategy Director"
+    }
+  ]
 }
 
 #### REMOVE USER
 DELETE http://localhost:3000/user/5
 
-### UPLOAD FILE
-POST http://localhost:3000/portfolio/
