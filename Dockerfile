@@ -11,14 +11,11 @@ RUN npm install
 # Copy the rest of the application files
 COPY . .
 
-# Copy the .env file into the container
-# COPY .env .env
-
 # Build the application
 RUN npm run build
 
 # Expose the application port
-EXPOSE 3000
+EXPOSE 8080
 
 # Start the application
 CMD ["npm", "run", "start:prod"]
