@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Copy the .env file into the container
-COPY .env .env
+# COPY .env .env
 
 # Build the application
 RUN npm run build
