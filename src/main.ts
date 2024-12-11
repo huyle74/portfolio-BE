@@ -15,7 +15,7 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(8080);
+  await app.listen(8080, '0.0.0.0');
 
   if (module.hot) {
     module.hot.accept();

@@ -15,7 +15,7 @@ export class GoogleServiceStorage {
     this.storage = new Storage({ credentials: credential });
     this.bucket = this.storage.bucket('huyenvo--portfolio');
     if (credential.private_key) {
-      credential.private_key = credential.private_key.replace(/\\n/g, '\n'); // Fix escaped newlines
+      credential.private_key = credential.private_key.replace(/\\n/g, '\n'); 
     }
   }
 

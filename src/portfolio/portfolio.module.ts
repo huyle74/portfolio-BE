@@ -23,14 +23,13 @@ console.log(
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'host.docker.internal',
+      host: process.env.DB_HOST || 'localhost',
       port: 3306,
       username: process.env.DB_USERNAME || 'root',
       password: process.env.DB_PASSWORD || '123456',
       database: process.env.DB_DATABASE || 'portfolio',
       entities: [Portfolio],
       synchronize: true,
-      logging: true,
     }),
     AuthModule,
     TypeOrmModule.forFeature([Portfolio]),
