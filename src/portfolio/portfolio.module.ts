@@ -1,29 +1,36 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { MulterModule } from '@nestjs/platform-express';
 import * as multer from 'multer';
+import * as dotenv from 'dotenv';
 
 import { AuthModule } from 'src/auth/auth.module';
-import { AuthController } from 'src/auth/auth.controller';
-import { AuthService } from 'src/auth/auth.service';
 import { Portfolio } from './portfolio.entity';
 import { PortfolioController } from './portfolio.controller';
 import { PortfolioService } from './portfolio.service';
-import { LoginMiddleWare } from './middleware/login.middleware';
 import { GoogleServiceStorage } from './core/google.storage';
+
+dotenv.config();
+
+console.log(
+  process.env.DB_USERNAME,
+  process.env.DB_PASSWORD,
+  process.env.DB_DATABASE,
+);
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
+      host: 'host.docker.internal',
       port: 3306,
-      username: 'root',
-      password: '123456',
-      database: 'portfolio',
+      username: process.env.DB_USERNAME || 'root',
+      password: process.env.DB_PASSWORD || '123456',
+      database: process.env.DB_DATABASE || 'portfolio',
       entities: [Portfolio],
       synchronize: true,
+      logging: true,
     }),
     AuthModule,
     TypeOrmModule.forFeature([Portfolio]),
@@ -33,9 +40,6 @@ import { GoogleServiceStorage } from './core/google.storage';
   controllers: [PortfolioController],
   providers: [PortfolioService, GoogleServiceStorage],
 })
-export class PortfolioModule implements NestModule {
+export class PortfolioModule {
   constructor(private dataSource: DataSource) {}
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoginMiddleWare).forRoutes('portfolio/login');
-  }
 }
