@@ -22,7 +22,7 @@ console.log(
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',
+      type: 'mysql', 
       host: process.env.DB_HOST || '127.0.0.1',
       port: 3306,
       username: process.env.DB_USERNAME || 'root',
