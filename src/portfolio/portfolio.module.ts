@@ -20,11 +20,11 @@ console.log(
 );
 
 @Module({
-  imports: [ 
-    TypeOrmModule.forRoot({     
+  imports: [
+    TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST,
-      port: 3306,
+      host: process.env.DB_HOST || 'localhost',
+      port: parseInt(process.env.DB_PORT) || 3306,
       username: process.env.DB_USERNAME || 'root',
       password: process.env.DB_PASSWORD || '123456',
       database: process.env.DB_DATABASE || 'portfolio',
@@ -41,4 +41,4 @@ console.log(
 })
 export class PortfolioModule {
   constructor(private dataSource: DataSource) {}
-}   
+}
