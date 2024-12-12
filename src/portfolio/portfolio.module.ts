@@ -23,7 +23,9 @@ console.log(
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
-      socketPath: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
+      socketPath: process.env.CLOUD_SQL_CONNECTION_NAME
+        ? `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`
+        : undefined,
       host: process.env.DB_HOST || 'localhost',
       port: parseInt(process.env.DB_PORT) || 3306,
       username: process.env.DB_USERNAME || 'root',
