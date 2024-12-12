@@ -23,6 +23,7 @@ console.log(
   imports: [
     TypeOrmModule.forRoot({
       type: 'mysql',
+      socketPath: `/cloudsql/${process.env.CLOUD_SQL_CONNECTION_NAME}`,
       host: process.env.DB_HOST || 'localhost',
       port: parseInt(process.env.DB_PORT) || 3306,
       username: process.env.DB_USERNAME || 'root',
@@ -30,6 +31,9 @@ console.log(
       database: process.env.DB_DATABASE || 'portfolio',
       entities: [Portfolio],
       synchronize: true,
+      extra: {
+        connectTimeout: 10000,
+      },
     }),
     AuthModule,
     TypeOrmModule.forFeature([Portfolio]),
