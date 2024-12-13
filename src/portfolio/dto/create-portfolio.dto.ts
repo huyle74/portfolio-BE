@@ -1,4 +1,4 @@
-import { IsArray, IsString, IsObject, IsOptional } from 'class-validator';
+import { IsArray, IsString, IsOptional } from 'class-validator';
 
 type People = {
   name: string;

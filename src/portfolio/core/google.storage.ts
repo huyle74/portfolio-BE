@@ -4,7 +4,8 @@ import { Storage, Bucket } from '@google-cloud/storage';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
-const credential = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS);
+
+const credential = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_STORAGE);
 
 @Injectable()
 export class GoogleServiceStorage {

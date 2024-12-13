@@ -10,7 +10,6 @@ import {
   UploadedFile,
   UseInterceptors,
   BadRequestException,
-  Redirect,
 } from '@nestjs/common';
 import * as multer from 'multer';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -34,7 +33,6 @@ export class PortfolioController {
 
   @Post('/create-portfolio')
   @UseInterceptors(FileInterceptor('file', { storage: multer.memoryStorage() }))
-  @Redirect('http://localhost:3001/admin')
   async createPortfolio(
     @Body() body: createPortDto,
     @UploadedFile() file: Express.Multer.File,
@@ -61,7 +59,6 @@ export class PortfolioController {
   }
 
   @Patch(':id')
-  @Redirect('http://localhost:3001/admin')
   updatePortfolio(@Param('id') id: string, @Body() body: UpdatePortDto) {
     return this.portfolioService.update(parseInt(id), body);
   }
