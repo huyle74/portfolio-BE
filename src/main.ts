@@ -21,6 +21,7 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+  app.enableCors();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, documentFactory);
 
