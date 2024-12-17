@@ -6,6 +6,7 @@ import {
   Controller,
   Get,
   Logger,
+  Redirect,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 
@@ -16,6 +17,7 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
+  @Redirect('/')
   async signIn(@Body() signInDto: Record<string, any>) {
     this.logger.log(`Login attempt for user: ${signInDto.username}`);
     try {
@@ -31,6 +33,7 @@ export class AuthController {
 
   @Get('/')
   GetAuth() {
+    console.log('Get auth Trigger!');
     return 'Auth Controller Get Trigger!!';
   }
 }

@@ -18,7 +18,7 @@ import { UpdatePortDto } from './dto/update-portfolio.dto';
 import { PortfolioService } from './portfolio.service';
 import { GoogleServiceStorage } from './core/google.storage';
 
-@Controller('portfolio')
+@Controller('')
 export class PortfolioController {
   constructor(
     public portfolioService: PortfolioService,

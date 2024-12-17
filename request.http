@@ -4,8 +4,11 @@ GET https://portfolio-be-257238999717.us-central1.run.app/portfolio
 ###### List all Portfolio
 GET http://localhost:8080/auth/
 
+###### List all Portfolio
+GET http://localhost:8080/
+
 #### Authentication
-POST https://portfolio-be-257238999717.us-central1.run.app/auth/login
+POST http://localhost:8080/auth/login
 Content-Type: application/json 
 
 {
@@ -23,7 +26,7 @@ Content-Type: application/json
 }
 
 #### Create Port
-POST http://localhost:3000/portfolio/create-portfolio
+POST http://localhost:3000/create-portfolio
 content-Type: application/json
 
 {
