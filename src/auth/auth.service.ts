@@ -10,15 +10,16 @@ const password = process.env.PASSWORD;
 @Injectable()
 export class AuthService {
   constructor(private jwtService: JwtService) {}
-
+  
   async login(user: string, pass: string): Promise<{ access_token: string }> {
     if (user !== username || pass !== password) {
       throw new UnauthorizedException();
     } else {
       const payload = { username: username };
-      const res = await this.jwtService.signAsync(payload);
+      const token = await this.jwtService.signAsync(payload);
+      console.log(token);
       return {
-        access_token: res,
+        access_token: token,
       };
     }
   }

@@ -16,7 +16,7 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  @Redirect('/')
+  // @Redirect('/')
   async signIn(@Body() signInDto: Record<string, any>) {
     this.logger.log(`Login attempt for user: ${signInDto.username}`);
     try {

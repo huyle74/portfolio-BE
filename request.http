@@ -8,7 +8,7 @@ GET http://localhost:8080/auth/
 GET http://localhost:8080/
 
 #### Authentication
-POST http://localhost:8080/auth/login
+POST http://localhost:3000/auth/login
 Content-Type: application/json 
 
 {
