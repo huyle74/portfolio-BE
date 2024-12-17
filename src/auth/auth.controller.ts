@@ -4,7 +4,6 @@ import {
   HttpStatus,
   HttpCode,
   Controller,
-  Get,
   Logger,
   Redirect,
 } from '@nestjs/common';
@@ -29,11 +28,5 @@ export class AuthController {
       this.logger.error(`Failed login attempt for user: ${signInDto.username}`);
       throw error;
     }
-  }
-
-  @Get('/')
-  GetAuth() {
-    console.log('Get auth Trigger!');
-    return 'Auth Controller Get Trigger!!';
   }
 }
